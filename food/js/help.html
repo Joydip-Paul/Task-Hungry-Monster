@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .country{
+            border: 1px solid #000;
+            border-radius: 20px;
+            text-align: center;
+            padding: 20px;
+            width: 400px;
+            background-color: saddlebrown;
+            color: #ffffff;
+            font-size: 20px;
+        }
+        #countryName{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            grid-gap: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="countryDetail">
+
+    </div>
+    <div id="countryName">
+
+    </div>
+    
+    <script>
+        fetch('https://restcountries.eu/rest/v2/all')
+        .then(res => res.json())
+        .then(data => displayCountries(data));
+
+        const displayCountries = country =>{
+            
+            country.forEach(countryName => {
+                // console.log(countryName.name);
+
+                const div = document.getElementById('countryName');
+                const newDiv = document.createElement('div');
+                newDiv.className = 'country'
+                const countryInfo = `
+                    <h1 class="country-name">${countryName.name}</h1>
+                    <p>${countryName.capital}</p>
+                    
+                    <button onclick="displayCountryDetails('${countryName.name}')">Details</button>
+                `
+                newDiv.innerHTML = countryInfo;
+                div.appendChild(newDiv);
+            });
+        }
+
+        const displayCountryDetails = name =>{
+            console.log(name);
+            const url = `https://restcountries.eu/rest/v2/name/${name}`;
+            fetch(url)
+            .then(res => res.json())
+            .then(data => renderCountryInfo(data[0]))
+        }
+
+        const renderCountryInfo = country =>{
+            console.log(country)
+            const countryDiv = document.getElementById('countryDetail');
+            countryDiv.innerHTML = `
+                <h1>${country.name}</h1>
+                <p>${country.population}</p>
+                <p>${country.area}</p>
+                <img src="${country.flag}">
+            `
+        }
+    </script>
+</body>
+</html>

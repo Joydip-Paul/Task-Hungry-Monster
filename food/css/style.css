@@ -1,0 +1,61 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #F8F7F5;
+}
+.search-area{
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%,-20%);
+}
+.search-area input{
+    width: 400px;
+    background-color: #E5E5E5;
+    height: 50px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 0px 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.search-area button{
+    width: 100px;
+    height: 50px;
+    background-color: #F06C4E;
+    color: #fff;
+    outline: none;
+    border: none;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+}
+#invalid{
+    display: none;
+}
+img{
+    width: 100%;
+    border-radius: 10px;
+}
+#foodGallery{
+    margin-top: 200px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-gap: 20px;
+}
+.new-div{
+    background-color: #F06C4E;
+    width: 400px;
+    margin-left: 50px;
+    border-radius: 10px;
+}
+.new-div h1{
+    font-size: 20px;
+    text-align: center;
+}
+#foodDetails{
+    background-color: #F06C4E;
+    border-radius: 10px;
+}
