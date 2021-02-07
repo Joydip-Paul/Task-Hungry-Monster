@@ -15,6 +15,8 @@ searchBtn.addEventListener('click',function(){
     }
 });
 
+
+
 //data get from api
 const foodFromApi = ApiMeal => {
     const url = (`https://www.themealdb.com/api/json/v1/1/search.php?s=${ApiMeal}`);
@@ -23,21 +25,23 @@ const foodFromApi = ApiMeal => {
     fetch(url)
     .then(res => res.json())
     // .then (data => console.log(data))
-    .then (data => displayFood(data.meals))
+    .then (data => {
+        displayFood(data.meals);
+    })
 
 
-    //display data in first page
-    const displayFood = foodElement => {
-        const conatinerDiv = document.getElementById('foodGallery');
-        foodElement.map(food => {
-            const newDiv = document.createElement('div');
-            newDiv.className = 'new-div';
+//display data in first page
+const displayFood = foodElement => {
+    const conatinerDiv = document.getElementById('foodGallery');
+    foodElement.map(food => {
+        const newDiv = document.createElement('div');
+        newDiv.className = 'new-div';
 
-            const foodInfo = `
-                
-                    <img src = "${food.strMealThumb}">
-                    <h1>${food.strMeal}</h1>
-               
+        const foodInfo = `
+            <div onclick = "singleFoodDetails(${food.name})">
+                <img src = "${food.strMealThumb}">
+                <h1>${food.strMeal}</h1>
+            </div>
             `
             newDiv.innerHTML = foodInfo;
             conatinerDiv.appendChild(newDiv);
@@ -46,23 +50,20 @@ const foodFromApi = ApiMeal => {
 }
 
 
-
-const singleFoodDetails = foodName => {
-    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${foodName}`;
-
-    fetch(url)
+const singleFoodDetails = name => {
+    // const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`;
+    const Url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${name}`;
+    // console.log(url);
+    fetch(Url)
     .then(res => res.json())
-    .then(data => {
-        renderFood(data.meals[0]);
-    });
-};
+    .then(data => renderFood(data.meals[0]))
+}
 
 const renderFood = food => {
+    // console.log(food);
     const foodDetails = document.getElementById('foodDetails');
     foodDetails.innerHTML = `
-        <img src="${food.strMealThumb}">
-        
-    `
-
-
-}
+        <h1>${food.strMeal}</h1>
+        <img src="${food.strMealThumb}" alt="">   
+    `;
+};

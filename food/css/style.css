@@ -42,12 +42,14 @@ img{
 #foodGallery{
     margin-top: 200px;
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(4,1fr);
     grid-gap: 20px;
+
 }
 .new-div{
+    position: relative;
     background-color: #F06C4E;
-    width: 400px;
+    width: 300px;
     margin-left: 50px;
     border-radius: 10px;
 }
