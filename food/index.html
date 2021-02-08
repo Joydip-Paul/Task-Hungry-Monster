@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 <body>
-    <div class="search-area">
+    <!-- <div class="search-area">
         <input type="text" placeholder="serach for meal..." id="searchField">
         <button id="searchBtn">search</button>
-        <!-- <button id="searchBtn")">search</button> -->
         <p id="invalid">Make sure you entered a valid food or field is not empty</p>
     </div>
     <div id="foodGallery">
@@ -20,8 +20,28 @@
 
     <div id="foodDetails">
       
-    </div>
-    <!-- <script src="js/app.js"></script> -->
+    </div> -->
+
+    
+        <div class="input-area">
+            <input type="text" id="searchField">
+            <button onclick="searchFoods()">Search</button>
+        </div>
+
+        <!-- For Error -->
+        <p id="error"></p>
+
+        <!-- For details -->
+        <div id="divContainer">
+
+        </div>
+
+        <!-- For Modal -->
+        <div id="modal">
+            
+        </div>
+
+    <!-- <script src="js/index.js"></script> -->
     <script src="js/index.js"></script>
 </body>
 </html>

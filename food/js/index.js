@@ -1,69 +1,65 @@
-// const conatinerDiv = document.getElementById('foodGallery');
-const searchBtn = document.getElementById('searchBtn');
+const searchFoods = () => {
+    const searchMeal = document.getElementById('searchField').value;
+    console.log(searchMeal);
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchMeal}`
 
-
-searchBtn.addEventListener('click',function(){
-    const serachField = document.getElementById('searchField').value;
-
-    const invalid = document.getElementById('invalid');
-    if(serachField === ''){
-        invalid.style.display = 'block';
-    }
-    else{
-        invalid.style.display = 'none';
-        foodFromApi(serachField);
-    }
-});
-
-
-
-//data get from api
-const foodFromApi = ApiMeal => {
-    const url = (`https://www.themealdb.com/api/json/v1/1/search.php?s=${ApiMeal}`);
-    // console.log(url);
-
+    //load data
     fetch(url)
     .then(res => res.json())
-    // .then (data => console.log(data))
-    .then (data => {
-        displayFood(data.meals);
-    })
+    .then(data => displayFoods(data.meals))
+    .catch(error => displayError ('Please Enter Valid Food'));
+}
 
+const displayFoods = foods => {
+    const divContainer = document.getElementById('divContainer');
+    divContainer.innerHTML = ' ';
+    foods.forEach(meal => {
+        const singleDiv = document.createElement('div');
+        singleDiv.className = 'single-div';
+        singleDiv.innerHTML = `
 
-//display data in first page
-const displayFood = foodElement => {
-    const conatinerDiv = document.getElementById('foodGallery');
-    foodElement.map(food => {
-        const newDiv = document.createElement('div');
-        newDiv.className = 'new-div';
-
-        const foodInfo = `
-            <div onclick = "singleFoodDetails(${food.name})">
-                <img src = "${food.strMealThumb}">
-                <h1>${food.strMeal}</h1>
+            <div onclick="getIngredients('${meal.idMeal}')">
+                <img src = "${meal.strMealThumb}">
+                <h2>${meal.strMeal}</h2>
             </div>
-            `
-            newDiv.innerHTML = foodInfo;
-            conatinerDiv.appendChild(newDiv);
-        })
-    }
+        `
+        divContainer.appendChild(singleDiv);
+    });
 }
 
-
-const singleFoodDetails = name => {
-    // const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`;
-    const Url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${name}`;
-    // console.log(url);
-    fetch(Url)
+const getIngredients = (list) => {
+    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${list}`
+    fetch(url)
     .then(res => res.json())
-    .then(data => renderFood(data.meals[0]))
+    .then(data => displayIngredients(data.meals))
 }
 
-const renderFood = food => {
-    // console.log(food);
-    const foodDetails = document.getElementById('foodDetails');
-    foodDetails.innerHTML = `
-        <h1>${food.strMeal}</h1>
-        <img src="${food.strMealThumb}" alt="">   
-    `;
-};
+const displayIngredients = mealInfo => {
+    const modal = document.getElementById('modal');
+
+    mealInfo.forEach (meal => {
+        console.log(meal.strCategory)
+        const newModalDiv = document.createElement('div');
+        newModalDiv.className = 'modal';
+        newModalDiv.innerHTML = `
+            <div>
+                <img src = "${meal.strMealThumb}">
+                <h2>${meal.strMeal}</h2>
+                <h5>Ingredients</h5>
+                <p> <i class="fas fa-check-square"></i> ${meal.strIngredient1}</p>
+                <p> <i class="fas fa-check-square"></i> ${meal.strIngredient2}</p>
+                <p> <i class="fas fa-check-square"></i> ${meal.strIngredient3}</p>
+                <p> <i class="fas fa-check-square"></i> ${meal.strIngredient4}</p>
+                <p> <i class="fas fa-check-square"></i> ${meal.strIngredient5}</p>
+                <p> <i class="fas fa-check-square"></i> ${meal.strIngredient6}</p>
+            </div>
+        `
+        modal.appendChild(newModalDiv);
+    })
+}
+
+
+const displayError = error => {
+    const errorTag = document.getElementById('error');
+    errorTag.innerText = error;
+}
